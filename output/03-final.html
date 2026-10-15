@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>我用 AI 搭了一条「自动写稿流水线」,从选题到发布只要 30 分钟 | AI Pipeline 自动排版</title>
+<style>
+  body { margin:0; background:#f4f4f4; font-family: -apple-system,"PingFang SC","Microsoft YaHei",sans-serif; color:#333; }
+  .cover { padding:56px 24px 40px; background:linear-gradient(135deg,#1f3b73 0%,#2f5da8 55%,#4a90d9 100%); color:#fff; text-align:center; }
+  .cover .tag { display:inline-block; font-size:12px; letter-spacing:2px; border:1px solid rgba(255,255,255,.6); border-radius:20px; padding:4px 14px; margin-bottom:18px; }
+  .cover h1 { font-size:24px; line-height:1.5; margin:0 0 14px; font-weight:700; }
+  .cover .meta { font-size:13px; opacity:.85; }
+  .wrap { max-width:680px; margin:0 auto; background:#fff; padding:36px 28px 48px; box-shadow:0 2px 12px rgba(0,0,0,.06); }
+  .art-title { font-size:22px; line-height:1.55; margin:0 0 22px; color:#1a1a1a; }
+  .sec-title { font-size:18px; margin:30px 0 12px; padding-left:10px; border-left:4px solid #2f5da8; color:#1f3b73; }
+  .sub-title { font-size:15px; margin:18px 0 8px; color:#2f5da8; }
+  .para { font-size:15.5px; line-height:1.9; margin:10px 0; text-align:justify; }
+  blockquote { margin:16px 0; padding:12px 16px; background:#eef3fb; border-left:4px solid #4a90d9; color:#3d5271; border-radius:0 6px 6px 0; font-size:14.5px; }
+  .list { padding-left:22px; }
+  .list li { font-size:15px; line-height:1.85; margin:6px 0; }
+  .code { background:#0f172a; color:#e2e8f0; padding:16px; border-radius:8px; overflow-x:auto; font-size:13px; line-height:1.7; font-family:Consolas,Menlo,monospace; }
+  .divider { border:none; border-top:1px dashed #ccc; margin:28px 0; }
+  .center { text-align:center; color:#888; font-size:13px; margin:18px 0; }
+  .footer-card { background:linear-gradient(135deg,#1f3b73,#4a90d9); color:#fff; border-radius:10px; padding:22px; text-align:center; margin-top:34px; }
+  .footer-card h3 { margin:0 0 8px; font-size:17px; }
+  .footer-card p { margin:4px 0; font-size:13.5px; opacity:.92; }
+  .stamp { display:inline-block; margin-top:10px; font-size:12px; border:1px solid rgba(255,255,255,.7); border-radius:16px; padding:3px 12px; }
+</style>
+</head>
+<body>
+<div class="cover">
+  <div class="tag">AI CONTENT PIPELINE · 最小作品</div>
+  <h1>我用 AI 搭了一条「自动写稿流水线」,从选题到发布只要 30 分钟</h1>
+  <div class="meta">四阶段流水线自动生成 · 选题 → 初稿 → 排版 → 发布</div>
+</div>
+<div class="wrap">
+<h1 class="art-title">我用 AI 搭了一条「自动写稿流水线」,从选题到发布只要 30 分钟</h1>
+<blockquote>导语:很多人以为「AI 写作」= 让 AI 直接写一篇,然后被一眼识破。</blockquote>
+<blockquote>真正能放进简历、能稳定出稿的做法,是把写作拆成一条流水线:</blockquote>
+<blockquote><strong>选题 → 初稿 → 排版 → 发布</strong>,每个环节让 AI 做它最擅长的那一步。</blockquote>
+<h2 class="sec-title">一、为什么需要一条写稿流水线</h2>
+<p class="para">写一篇公众号文章,80% 的时间其实花在<strong>没在写</strong>:</p>
+<p class="para">反复纠结选题、对着空白文档发呆、排版调半天、发布前才发现格式乱了。</p>
+<p class="para">把流程拆开之后,AI 才能真正介入:</p>
+<ul class="list">
+<li><strong>选题</strong>:让 AI 从选题池里按热度 + 随机扰动自动挑,避免「凭感觉选题」;</li>
+<li><strong>初稿</strong>:让 AI 按固定结构生成初稿,人只负责补充事实和判断;</li>
+<li><strong>排版</strong>:让 AI 把 Markdown 转成排版好的 HTML,格式统一、不用手调;</li>
+<li><strong>发布</strong>:让 AI 记录发布时间、链接、字数,形成可追溯的发布日志。</li>
+</ul>
+<blockquote>金句:AI 写作不是「让 AI 替你写」,而是「让 AI 替你完成可自动化的部分」。</blockquote>
+<h2 class="sec-title">二、四阶段流水线,30 分钟跑通</h2>
+<h3 class="sub-title">Stage 1 选题</h3>
+<p class="para">选题池里维护 6 个候选,每条带领域、热度分、切入角度。</p>
+<p class="para">选择规则:<strong>加权随机</strong> —— 热度分越高越容易被选中,再加一点随机扰动,</p>
+<p class="para">保证选题既「追热点」又不「每篇都一样」。</p>
+<h3 class="sub-title">Stage 2 初稿</h3>
+<p class="para">根据选题卡,按固定模板生成 Markdown 初稿:</p>
+<p class="para">标题、导语、小节标题、要点列表、引用金句、结尾行动号召。</p>
+<p class="para">内容结构由模板保证,细节由参数注入,跑一次出一篇。</p>
+<h3 class="sub-title">Stage 3 排版</h3>
+<p class="para">一个 200 行的自写 Markdown 渲染器,把初稿转成公众号风格的 HTML:</p>
+<p class="para">封面条、正文排版、引用块、代码块,全部内联样式,离线可看、可截图。</p>
+<h3 class="sub-title">Stage 4 发布</h3>
+<p class="para">把产物汇总到发布日志:发布时间、输出文件、正文字数、总耗时。</p>
+<p class="para">发布渠道可以是公众号草稿箱、飞书文档或本地 HTML —— 流水线只管「交付物一致」。</p>
+<h2 class="sec-title">三、真实运行记录</h2>
+<p class="para">本次运行使用的命令只有一行:</p>
+<pre class="code"><code>python pipeline.py --seed 42</code></pre>
+<p class="para">产物一览:</p>
+<p class="para">整个流水线只依赖 Python 标准库,复制到任何电脑都能跑,</p>
+<p class="para">这也正是它适合放进作品集的原因:<strong>评委可以自己复现</strong>。</p>
+<h2 class="sec-title">四、踩过的坑与改进方向</h2>
+<ul class="list">
+<li><strong>坑 1:让 AI 一次写完,质量不可控</strong> → 改成四阶段,每阶段一个明确产物;</li>
+<li><strong>坑 2:排版依赖在线资源,离线就打不开</strong> → 全部内联 CSS,截图稳定;</li>
+<li><strong>坑 3:没有日志,跑完不知道发生了什么</strong> → 增加发布日志,每次运行留痕;</li>
+<li><strong>下一步</strong>:把选题池接进飞书多维表格,用定时任务每天自动选题 + 生成初稿。</li>
+</ul>
+<h2 class="sec-title">五、复跑指南</h2>
+<pre class="code"><code># 1. 克隆或下载本项目(仅需 Python 3.8+,无需任何第三方库)
+# 2. 进入项目目录,运行:
+python pipeline.py --seed 42
+# 3. 打开 output/03-final.html 查看排版结果
+# 4. 查看 output/04-publish.log 确认发布记录</code></pre>
+<hr class="divider"/>
+<p class="para"><strong>结尾</strong>:这条流水线 30 分钟就能搭好,但它最大的价值不是省时间,</p>
+<p class="para">而是让你拥有一个<strong>可复现、可改进、可展示</strong>的 AI 作品。</p>
+<p class="para">如果你也想做一个,从今天的选题池里挑一个开始。</p>
+<p class="center">—— 本文由 AI 流水线自动生成,人在环上负责判断 ——</p>
+  <div class="footer-card">
+    <h3>这条流水线是怎么跑通的?</h3>
+    <p>选题卡 / 初稿 / 排版 HTML / 发布日志,全部由一次命令生成。</p>
+    <p>复现方式:<code style="background:rgba(255,255,255,.18);padding:2px 8px;border-radius:4px;">python pipeline.py --seed 42</code></p>
+    <div class="stamp">产出时间 2026-10-15 16:52:59 · 全流程 0.0s</div>
+  </div>
+</div>
+</body>
+</html>

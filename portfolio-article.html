@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>复盘 | 我把「AI 自动写稿」做成了流水线</title>
+<style>
+  body{margin:0;background:#f4f4f4;font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;color:#333;line-height:1.9;}
+  .cover{background:linear-gradient(135deg,#1f3b73 0%,#2f5da8 55%,#4a90d9 100%);color:#fff;text-align:center;padding:64px 24px 48px;}
+  .cover .tag{display:inline-block;font-size:12px;letter-spacing:3px;border:1px solid rgba(255,255,255,.6);border-radius:20px;padding:4px 14px;margin-bottom:18px;}
+  .cover h1{font-size:26px;line-height:1.5;margin:0 0 12px;font-weight:700;}
+  .cover .meta{font-size:13px;opacity:.85;}
+  .wrap{max-width:720px;margin:0 auto;background:#fff;padding:40px 32px 56px;box-shadow:0 2px 12px rgba(0,0,0,.06);}
+  h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid #2f5da8;color:#1f3b73;}
+  h3{font-size:16px;margin:22px 0 8px;color:#2f5da8;}
+  p{font-size:15.5px;margin:10px 0;text-align:justify;}
+  blockquote{margin:16px 0;padding:12px 16px;background:#eef3fb;border-left:4px solid #4a90d9;color:#3d5271;border-radius:0 6px 6px 0;font-size:14.5px;}
+  img{max-width:100%;border-radius:10px;border:1px solid #e2e2e2;display:block;margin:14px auto;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+  .cap{text-align:center;color:#888;font-size:13px;margin:6px 0 18px;}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin:14px 0;}
+  th,td{border:1px solid #dfe3ea;padding:8px 12px;text-align:left;}
+  th{background:#eef3fb;color:#1f3b73;font-weight:600;}
+  code{background:#f0f2f5;border-radius:4px;padding:2px 6px;font-size:13px;font-family:Consolas,Menlo,monospace;color:#c0341d;}
+  pre{background:#0f172a;color:#e2e8f0;border-radius:8px;padding:16px;overflow-x:auto;font-size:13px;line-height:1.7;font-family:Consolas,Menlo,monospace;}
+  .card{background:#eef3fb;border-radius:10px;padding:18px 20px;margin:18px 0;}
+  .card b{color:#1f3b73;}
+  .btn-like{display:inline-block;background:linear-gradient(135deg,#1f3b73,#4a90d9);color:#fff;border-radius:8px;padding:10px 22px;text-decoration:none;font-size:14px;margin:8px 4px 0 0;}
+  .divider{border:none;border-top:1px dashed #ccc;margin:30px 0;}
+</style>
+</head>
+<body>
+<div class="cover">
+  <div class="tag">AI 应用实战复盘</div>
+  <h1>我把「AI 自动写稿」做成了流水线:<br/>从选题到发布,30 分钟跑通</h1>
+  <div class="meta">一个能放进简历的最小可运行作品 · 全代码开源可复现</div>
+</div>
+<div class="wrap">
+
+<p>很多人在简历里写「熟悉 AI 工具」「会用 ChatGPT 写作」。面试官真正想看到的,是你<strong>用 AI 交付了一个完整结果</strong>。</p>
+<p>这篇文章记录我做的第一个 AI 作品:<strong>一条「自动选题 → 生成初稿 → 排版发布」的内容流水线</strong>。它真实跑通了,产物是一篇排版好的公众号风格文章;代码只有 300 多行,零第三方依赖,任何人都能复现。</p>
+
+<h2>一、这个作品是什么</h2>
+<p>一句话:一条命令行流水线,输入一个随机种子,输出一篇排版好的文章 + 完整发布日志。</p>
+<pre>python pipeline.py --seed 42</pre>
+<p>全流程拆成四个阶段,每个阶段一个明确产物:</p>
+<table>
+<tr><th>阶段</th><th>Agent 职责</th><th>产物</th></tr>
+<tr><td>1 · 选题</td><td>从选题池按「热度分 + 随机扰动」加权自动选题</td><td>01-topic.md 选题卡</td></tr>
+<tr><td>2 · 初稿</td><td>按固定文章结构生成 Markdown 初稿</td><td>02-draft.md 初稿</td></tr>
+<tr><td>3 · 排版</td><td>自写 Markdown 渲染器,转公众号风格 HTML</td><td>03-final.html 成品</td></tr>
+<tr><td>4 · 发布</td><td>汇总发布时间、链接、字数,写发布日志</td><td>04-publish.log 日志</td></tr>
+</table>
+
+<h2>二、为什么值得放进简历</h2>
+<p>它同时展示了四件事:</p>
+<ul>
+<li><strong>工程拆解能力</strong>:把「写文章」拆成可自动化的四段,而不是让 AI 一把梭;</li>
+<li><strong>AI 应用能力</strong>:每个阶段都是一个可替换的 Agent 接口,可以换成 Claude Code、GPT、飞书多维表格;</li>
+<li><strong>交付能力</strong>:一次运行产出完整可用的成品,不是 demo 片段;</li>
+<li><strong>可复现性</strong>:固定 seed 即可复现选题,面试官自己就能跑。</li>
+</ul>
+<blockquote>金句:AI 写作不是「让 AI 替你写」,而是「让 AI 替你完成可自动化的部分」。</blockquote>
+
+<h2>三、流水线长什么样</h2>
+<p>下面是架构图:四个阶段串行,每个阶段有独立输入输出,数据流方向清晰。</p>
+<img src="assets/03-pipeline-flow.png" alt="流水线架构图"/>
+<div class="cap">图 1:流水线架构(选题 → 初稿 → 排版 → 发布,一键复现)</div>
+
+<h2>四、真实运行记录</h2>
+<p>这是我在本机 PowerShell 里的真实运行输出,一次通过,4 个阶段全部成功。</p>
+<img src="assets/02-terminal.png" alt="终端运行记录"/>
+<div class="cap">图 2:真实运行日志 —— 4 阶段跑通,产物 4 个文件,总耗时约 0.4 秒</div>
+
+<h2>五、排版成品长什么样</h2>
+<p>排版阶段直接产出公众号风格的 HTML:封面、导语、小节标题、引用金句、底部卡片,全部内联样式,离线可打开、可截图。</p>
+<img src="assets/01-final-article.png" alt="排版成品首屏"/>
+<div class="cap">图 3:流水线自动排版的文章成品(首屏)</div>
+
+<h2>六、怎么复现(给面试官 / 给读者)</h2>
+<p>只需要 Python 3.8+,不需要装任何第三方库:</p>
+<pre># 1. 下载项目(或从 GitHub 克隆)
+# 2. 进入项目目录
+python pipeline.py --seed 42
+# 3. 打开 output/03-final.html 查看排版成品
+# 4. 查看 output/04-publish.log 确认发布记录</pre>
+<div class="card">
+<b>项目目录结构</b><br/>
+<code>pipeline.py</code> —— 流水线主脚本(四阶段,约 300 行)<br/>
+<code>output/</code> —— 运行产物:选题卡 / 初稿 / 排版 HTML / 发布日志 / 运行日志<br/>
+<code>assets/</code> —— 本文截图素材
+</div>
+
+<h2>七、下一步怎么升级</h2>
+<ul>
+<li>把选题池接进<strong>飞书多维表格</strong>:用表格维护选题,定时任务每天自动选题 + 生成初稿;</li>
+<li>把初稿阶段换成<strong>真实 LLM 接口</strong>(Claude / GPT):模板保证结构,模型负责文笔;</li>
+<li>发布阶段接入<strong>公众号草稿箱 / 飞书文档</strong>:跑完自动创建在线文档;</li>
+<li>加一个<strong>人工审核门</strong>:发布前必须过一道人审,防止内容翻车。</li>
+</ul>
+
+<hr class="divider"/>
+<h3>简历里怎么放这个作品</h3>
+<div class="card">
+<b>作品集链接(可点击)</b>:飞书文档复盘文 + GitHub 仓库(见文末链接)<br/>
+<b>一句话描述</b>:搭建「AI 自动选题→初稿→排版→发布」流水线,零依赖 Python 实现,一次命令产出完整文章,固定 seed 可复现,适合作为 AI 应用能力证明。
+</div>
+
+<p style="text-align:center;color:#888;font-size:13px;margin-top:28px;">—— 本文由 AI 流水线自动生成,人在环上负责判断 ——</p>
+</div>
+</body>
+</html>

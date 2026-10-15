@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>AI Content Pipeline · 架构图</title>
+<style>
+  body{margin:0;background:#f4f3ee;font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;color:#1a1b1c;}
+  .page{max-width:1100px;margin:0 auto;padding:36px 28px 48px;}
+  .head{text-align:center;margin-bottom:28px;}
+  .head .tag{display:inline-block;font-size:12px;letter-spacing:3px;color:#2f5da8;border:1px solid #2f5da8;border-radius:20px;padding:4px 16px;margin-bottom:14px;}
+  .head h1{font-size:26px;margin:0 0 8px;}
+  .head p{color:#6b7280;font-size:14px;margin:0;}
+  .kpis{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:34px;}
+  .kpi{flex:1 1 200px;min-width:0;padding:16px 20px;background:#fff;border-radius:14px;border:1px solid #e4e3dd;}
+  .kpi .k{font-size:12px;color:#6b7280;}
+  .kpi .v{font-size:24px;font-weight:600;color:#1f3b73;margin-top:4px;}
+  .flow{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;justify-content:center;}
+  .stage{flex:1 1 210px;min-width:0;background:#fff;border-radius:14px;border:1px solid #e4e3dd;padding:16px 16px 14px;box-sizing:border-box;position:relative;}
+  .stage .num{font-size:11px;font-weight:600;color:#fff;background:#2f5da8;border-radius:12px;padding:2px 10px;display:inline-block;letter-spacing:1px;}
+  .stage .name{font-size:17px;font-weight:600;margin:10px 0 6px;color:#1f3b73;}
+  .stage .role{font-size:13px;color:#6b7280;line-height:1.6;margin-bottom:10px;}
+  .stage .out{font-size:12px;background:#eef3fb;border-radius:8px;padding:8px 10px;line-height:1.7;color:#3d5271;}
+  .stage .out b{color:#1f3b73;}
+  .arrow{display:flex;align-items:center;font-size:26px;color:#9db4d9;flex:0 0 26px;justify-content:center;padding-top:40px;}
+  .bottom{margin-top:34px;background:linear-gradient(135deg,#1f3b73,#4a90d9);border-radius:14px;color:#fff;padding:20px 24px;text-align:center;}
+  .bottom .cmd{font-family:Consolas,Menlo,monospace;background:rgba(255,255,255,.16);border-radius:8px;padding:8px 16px;display:inline-block;font-size:14px;margin:8px 0;}
+  .bottom p{font-size:13px;opacity:.92;margin:6px 0 0;}
+  .note{text-align:center;color:#9aa0a6;font-size:12px;margin-top:18px;}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="head">
+    <div class="tag">PORTFOLIO · MINIMUM VIABLE PIPELINE</div>
+    <h1>AI 自动写稿流水线 · 架构</h1>
+    <p>一条命令跑通「选题 → 初稿 → 排版 → 发布」,产物可直接用于内容发布</p>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="k">流水线阶段</div><div class="v">4</div></div>
+    <div class="kpi"><div class="k">运行产物(文件)</div><div class="v">4</div></div>
+    <div class="kpi"><div class="k">成稿字数(去空白)</div><div class="v">1492</div></div>
+    <div class="kpi"><div class="k">第三方依赖</div><div class="v">0</div></div>
+  </div>
+
+  <div class="flow">
+    <div class="stage">
+      <div><span class="num">STAGE 1</span></div>
+      <div class="name">选题 Agent</div>
+      <div class="role">从 6 条选题池中,按「热度分 + 随机扰动」加权自动选题,输出选题卡</div>
+      <div class="out">产物 <b>01-topic.md</b><br/>标题 / 领域 / 热度 / 角度</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="stage">
+      <div><span class="num">STAGE 2</span></div>
+      <div class="name">初稿 Agent</div>
+      <div class="role">按固定文章结构生成 Markdown 初稿:导语、小节、要点、金句、结尾</div>
+      <div class="out">产物 <b>02-draft.md</b><br/>1492 字结构化初稿</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="stage">
+      <div><span class="num">STAGE 3</span></div>
+      <div class="name">排版 Agent</div>
+      <div class="role">自写 Markdown 渲染器,输出公众号风格 HTML,纯内联样式、离线可看</div>
+      <div class="out">产物 <b>03-final.html</b><br/>封面 / 正文 / 引用 / 代码块</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="stage">
+      <div><span class="num">STAGE 4</span></div>
+      <div class="name">发布 Agent</div>
+      <div class="role">汇总发布时间、链接、字数、耗时,生成可追溯的发布日志</div>
+      <div class="out">产物 <b>04-publish.log</b><br/>发布状态 / 渠道 / 统计</div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div style="font-size:14px;font-weight:600;">一键复现</div>
+    <div class="cmd">python pipeline.py --seed 42</div>
+    <p>打开 output/03-final.html 即见排版成品 · 全流程约 0.4 秒 · 仅需 Python 3.8+</p>
+  </div>
+  <div class="note">架构示意:各阶段为独立函数,可替换为 Claude Code / 飞书多维表格等真实实现</div>
+</div>
+</body>
+</html>
